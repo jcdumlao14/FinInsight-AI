@@ -1,0 +1,31 @@
+services:
+
+  fininsight:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "8501:8501"
+
+    env_file:
+      - .env
+
+    volumes:
+      - ./data:/app/data
+      - ./monitoring:/app/monitoring
+
+    restart: unless-stopped
+
+  monitoring:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitoring
+
+    ports:
+      - "8502:8502"
+
+    volumes:
+      - ./monitoring:/app/monitoring
+
+    restart: unless-stopped
