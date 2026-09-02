@@ -1,0 +1,57 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+data/raw/*
+data/processed/*
+data/chunks/*
+data/metadata/*
+
+# Databases / vector stores
+chroma_db/
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Generated monitoring data
+monitoring/feedback.json
+monitoring/*.json
+
+# Evaluation outputs
+evaluation/results/
+evaluation/*.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets
+*.pem
+*.key
+secrets/
+
+# Temporary files
+*.tmp
+*.bak

@@ -1,0 +1,13 @@
+﻿streamlit==1.60.0
+pandas
+numpy
+scikit-learn
+chromadb
+sentence-transformers
+rank-bm25
+google-genai
+pypdf
+python-dotenv
+requests
+tqdm
+pytest
