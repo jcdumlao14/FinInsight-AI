@@ -1,0 +1,15 @@
+[browser]
+gatherUsageStats = false
+
+[server]
+fileWatcherType = "none"
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+
+[theme]
+base = "light"
+primaryColor = "#e53935"
+backgroundColor = "#f7f9fc"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#17324f"
