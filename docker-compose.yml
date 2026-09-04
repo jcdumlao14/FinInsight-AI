@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
 
     ports:
-      - "8501:8501"
+      - "8503:8501"
 
     env_file:
       - .env
@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile.monitoring
 
     ports:
-      - "8502:8502"
+      - "8504:8502"
 
     volumes:
       - ./monitoring:/app/monitoring
