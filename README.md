@@ -342,6 +342,24 @@ Run locally:
 ```bash
 streamlit run app/streamlit_app.py
 ```
+---
+# 📷 Application Screenshots
+
+## 🏠 Streamlit Home Page
+
+![](docs/images/home.png)
+
+---
+
+## 🤖 AI Generated Answer
+
+![](docs/images/answer.png)
+
+---
+
+## 📚 Retrieved Sources
+
+![](docs/images/sources.png)
 
 ---
 
