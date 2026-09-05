@@ -4,7 +4,6 @@ gatherUsageStats = false
 [server]
 fileWatcherType = "none"
 headless = true
-enableCORS = false
 enableXsrfProtection = true
 
 [theme]

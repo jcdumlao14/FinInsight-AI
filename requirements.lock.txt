@@ -1,5 +1,7 @@
-﻿# FinInsight-AI reproducible runtime dependencies.
-# Versions are taken from the current environment when installed; otherwise a fallback is used.
+# FinInsight-AI project dependency lock
+# These are the direct, pinned runtime/test dependencies validated for this project.
+# Keep this file synchronized with requirements.txt.
+
 streamlit==1.60.0
 pandas==3.0.3
 numpy==2.4.6

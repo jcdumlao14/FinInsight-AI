@@ -796,6 +796,8 @@ if result:
                 answer=answer,
                 feedback=feedback_value,
                 sources=sources,
+                latency_ms=result.get("latency_ms"),
+                rewritten_query=result.get("rewritten_query"),
             )
             st.session_state.feedback_given = feedback_value
             st.success("Thank you! Your feedback has been recorded.")

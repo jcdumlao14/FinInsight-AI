@@ -55,3 +55,6 @@ secrets/
 # Temporary files
 *.tmp
 *.bak
+
+# Generated vector database artifacts
+data/vector_db/

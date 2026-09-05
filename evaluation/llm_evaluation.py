@@ -5,135 +5,54 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from rag.pipeline import FinInsightPipeline
 
-
 QUESTIONS = ROOT / "evaluation" / "questions.json"
-RESULTS = ROOT / "evaluation" / "llm_results.json"
+RESULTS = ROOT / "evaluation" / "llm_comparison.json"
+STYLES = ["basic", "grounded", "structured"]
 
 
 def main():
-    questions = json.loads(
-        QUESTIONS.read_text(encoding="utf-8")
-    )
-
+    questions = json.loads(QUESTIONS.read_text(encoding="utf-8"))
     pipeline = FinInsightPipeline()
-
-    passed = 0
-    records = []
-
-    print("=" * 70)
-    print("FinInsight-AI — LLM EVALUATION")
-    print("=" * 70)
+    rows = {style: [] for style in STYLES}
 
     for item in questions:
-        result = pipeline.answer(
-            item["question"],
-            top_k=5,
-        )
+        rewritten, retrieved = pipeline.retrieve(item["question"], top_k=5, candidate_k=20)
+        context = pipeline.build_context(retrieved)
+        expected_doc = item["expected_document"]
+        grounded = any((r.get("filename") or r.get("metadata", {}).get("filename")) == expected_doc for r in retrieved)
+        terms = [t.lower() for t in item.get("expected_terms", [])]
+        for style in STYLES:
+            answer = pipeline.llm.generate(item["question"], context, style=style)
+            low = answer.lower()
+            term_hits = sum(t in low for t in terms)
+            term_score = term_hits / len(terms) if terms else 1.0
+            score = 0.6 * term_score + 0.4 * float(grounded)
+            rows[style].append({"id": item["id"], "style": style, "grounded": grounded, "term_score": term_score, "score": score})
 
-        answer_lower = result[
-            "answer"
-        ].lower()
-
-        expected_terms = [
-            term.lower()
-            for term in item.get(
-                "expected_terms",
-                [],
-            )
-        ]
-
-        term_hits = [
-            term
-            for term in expected_terms
-            if term in answer_lower
-        ]
-
-        source_files = [
-            source.get("filename")
-            for source in result["sources"]
-        ]
-
-        source_grounded = (
-            item["expected_document"]
-            in source_files
-        )
-
-        answer_match = (
-            bool(term_hits)
-            if expected_terms
-            else True
-        )
-
-        success = (
-            source_grounded
-            and answer_match
-        )
-
-        passed += int(success)
-
-        records.append(
-            {
-                "id": item["id"],
-                "question": item["question"],
-                "answer": result["answer"],
-                "source_grounded": source_grounded,
-                "answer_match": answer_match,
-                "success": success,
-                "sources": result["sources"],
-            }
-        )
-
-        status = (
-            "PASS"
-            if success
-            else "FAIL"
-        )
-
-        print(
-            f"[{status}] {item['id']}"
-        )
-
-    score = (
-        passed / len(questions)
-    )
-
+    summary = {}
+    for style, values in rows.items():
+        summary[style] = {
+            "mean_score": sum(x["score"] for x in values) / len(values),
+            "mean_term_score": sum(x["term_score"] for x in values) / len(values),
+            "grounded_rate": sum(x["grounded"] for x in values) / len(values),
+        }
+    winner = max(summary, key=lambda s: summary[s]["mean_score"])
     output = {
+        "evaluation": "Basic vs Grounded vs Structured prompts",
         "questions": len(questions),
-        "passed": passed,
-        "score": score,
-        "results": records,
+        "styles": summary,
+        "best_prompt_style": winner,
+        "selection_rule": "highest mean evaluation score",
     }
+    RESULTS.write_text(json.dumps(output, indent=2), encoding="utf-8")
+    (ROOT / "evaluation" / "best_llm_prompt.json").write_text(json.dumps({"best_prompt_style": winner}, indent=2), encoding="utf-8")
+    print(json.dumps(output, indent=2))
 
-    RESULTS.write_text(
-        json.dumps(
-            output,
-            indent=2,
-        ),
-        encoding="utf-8",
-    )
-
-    print()
-    print("=" * 70)
-    print("LLM EVALUATION SUMMARY")
-    print("=" * 70)
-    print(
-        f"Passed     : "
-        f"{passed}/{len(questions)}"
-    )
-    print(
-        f"Score      : "
-        f"{score:.2%}"
-    )
-    print(
-        f"Results    : "
-        f"{RESULTS}"
-    )
 
 
 if __name__ == "__main__":
