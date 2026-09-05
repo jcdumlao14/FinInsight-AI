@@ -347,19 +347,19 @@ streamlit run app/streamlit_app.py
 
 ## 🏠 Streamlit Home Page
 
-![](docs/images/home.png)
+![](https://github.com/jcdumlao14/FinInsight-AI/blob/main/docs/streamlit%20home.png)
 
 ---
 
 ## 🤖 AI Generated Answer
 
-![](docs/images/answer.png)
+![](https://github.com/jcdumlao14/FinInsight-AI/blob/main/docs/Gen%20Answer.png)
 
 ---
 
 ## 📚 Retrieved Sources
 
-![](docs/images/sources.png)
+![](https://github.com/jcdumlao14/FinInsight-AI/blob/main/docs/R%20source.png)
 
 ---
 
