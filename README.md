@@ -43,6 +43,17 @@ The goal is simple:
 > **Find the right financial evidence first, then generate an answer grounded in that evidence.**
 
 ---
+## Problem Description
+
+Financial research often requires analysts and researchers to search through long annual reports and regulatory filings to find specific information such as revenue, net sales, earnings, business performance, and year-over-year changes. Manually locating and interpreting these figures can be time-consuming, especially when the relevant information is distributed across many pages and sections of a document.
+
+FinInsight-AI addresses this problem by providing a **source-grounded financial research assistant** that allows users to ask natural-language questions about financial documents and receive concise answers supported by retrieved evidence.
+
+The system combines **query rewriting, vector search, BM25 keyword search, Reciprocal Rank Fusion (RRF), and cross-encoder reranking** to improve the retrieval of relevant financial passages. The retrieved context is then provided to an LLM for answer generation, with prompts designed to reduce unsupported claims and preserve important financial details such as fiscal periods, currencies, units, and percentages.
+
+The goal is not to replace financial analysts, but to make document-based financial research **faster, more searchable, and easier to verify** by keeping answers grounded in the underlying source documents.
+
+---
 
 ## 🧠 System Architecture
 
