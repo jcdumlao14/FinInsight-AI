@@ -740,7 +740,7 @@ if result:
     dcol, spacer = st.columns([1.4, 4])
     with dcol:
         st.download_button(
-            "📥 📥 Download Answer",
+            "📥 Download Answer",
             data=download_text,
             file_name="fininsight_answer.txt",
             mime="text/plain",
@@ -842,13 +842,13 @@ with c2:
         <div class="section-card" style="margin-top:18px;">
           <div class="info-box">
             <div class="info-heading">⚙️ How It Works</div>
-            <div class="info-item">1ï¸âƒ£ <b>You ask a question</b><br>
+            <div class="info-item">1. <b>You ask a question</b><br>
               Enter a financial research question.</div>
-            <div class="info-item">2ï¸âƒ£ <b>We retrieve evidence</b><br>
+            <div class="info-item">2. <b>We retrieve evidence</b><br>
               Vector + BM25 retrieval are fused with RRF.</div>
-            <div class="info-item">3ï¸âƒ£ <b>AI generates an answer</b><br>
+            <div class="info-item">3. <b>AI generates an answer</b><br>
               Gemini 2.5 Flash uses retrieved context.</div>
-            <div class="info-item">4ï¸âƒ£ <b>You review and provide feedback</b><br>
+            <div class="info-item">4. <b>You review and provide feedback</b><br>
               Feedback is recorded for monitoring.</div>
           </div>
         </div>
